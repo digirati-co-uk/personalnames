@@ -1,10 +1,15 @@
+import personalnames.titles as titles
+import bisect
+
+
 # noinspection PyTypeChecker
-def gen_initials(lastname, firstname, formats):
+def gen_initials(lastname, firstname, title, formats):
     """
     Generate the name formats with initials.
 
     :param lastname: person's lastname
     :param firstname: person's firstname
+    :param title: person's title
     :param formats: list of formats ['firstnamelastname', 'lastnamefirstname']
     :return: de-duplicated list of names with initials.
     """
@@ -17,16 +22,77 @@ def gen_initials(lastname, firstname, formats):
         initials += parts[x:]
         if "firstnamelastname" in formats:
             forms.append(" ".join([" ".join(initials), lastname]))
+            if title:
+                forms.append(" ".join([title, " ".join(initials), lastname]))
         if "lastnamefirstname" in formats:
             forms.append(", ".join([lastname, " ".join(initials)]))
+            if title:
+                forms.append(", ".join([lastname, title + " " + " ".join(initials)]))
     for x in range(1, len(parts) + 1):
         initials = [part[0:1] + "." for part in parts[1:x]]
         initials += parts[x:]
         if "firstnamelastname" in formats:
             forms.append(" ".join([parts[0], " ".join(initials), lastname]))
+            if title:
+                forms.append(" ".join([title, parts[0], " ".join(initials), lastname]))
         if "lastnamefirstname" in formats:
             forms.append(lastname + ", " + " ".join([parts[0], " ".join(initials)]))
+            if title:
+                forms.append(lastname + ", " + " ".join([title, parts[0], " ".join(initials)]))
     return list(set(forms))
+
+
+def parse_titles(parts):
+    title_parts = []
+    suffix_parts = []
+    nominal_parts = []
+    for part in parts:
+        if part.lower() in titles.prefixes:
+            title_parts.append(part)
+        elif part.lower() in titles.suffixes:
+            suffix_parts.append(part)
+        else:
+            nominal_parts.append(part)
+    return title_parts, nominal_parts, suffix_parts
+
+
+def name_split(name):
+    name_list = []
+    comma_split = name.split(",")
+    for comma_item in comma_split[:-1]:
+        [name_list.append(normalise_whitespace(x)) for x in comma_item.split()]
+        name_list.append(",")
+    [name_list.append(normalise_whitespace(x)) for x in comma_split[-1].split()]
+    return name_list
+
+
+def name_parts(name):
+    """
+
+    :param name:
+    :return:
+    """
+
+    n_parts = name_split(name)
+    title, personal_name, suffix = parse_titles(n_parts)
+    if "," in personal_name:
+        lastname = whitespace_list(personal_name[: bisect.bisect(personal_name, ",") - 1])
+        firstname = whitespace_list(personal_name[bisect.bisect(personal_name, ","):])
+    else:
+        firstname = whitespace_list(personal_name[:-1])
+        lastname = whitespace_list([personal_name[-1]])
+    title = whitespace_list(title)
+    suffix = whitespace_list(suffix)
+    return (
+        title,
+        firstname,
+        lastname,
+        suffix
+    )
+
+
+def whitespace_list(text_list):
+    return normalise_whitespace(' '.join(text_list))
 
 
 def normalise_whitespace(text):
@@ -37,18 +103,4 @@ def normalise_whitespace(text):
     :return: string with whitespace normalised to single space
     """
     return " ".join(text.split())
-
-
-def remove_whitespace(text):
-    """
-    Remove all whitespace from a string
-
-    :param text: string
-    :return: string with no whitespace
-    """
-    return "".join(text.split())
-
-
-
-
 
