@@ -75,18 +75,20 @@ def name_split(name, split_char=","):
     return name_list
 
 
-def name_parts(name):
+def name_parts(name, split_c=","):
     """
+    TO DO: handle case with multiple commas (if this is a genuine case)
 
     :param name:
+    :param split_c:
     :return:
     """
 
-    n_parts = name_split(name)
+    n_parts = name_split(name, split_char=split_c)
     title, personal_name, suffix = parse_titles(n_parts)
-    if "," in personal_name:
-        lastname = whitespace_list(personal_name[: bisect.bisect(personal_name, ",") - 1])
-        firstname = whitespace_list(personal_name[bisect.bisect(personal_name, ","):])
+    if split_c in personal_name:
+        lastname = whitespace_list(personal_name[: bisect.bisect(personal_name, split_c) - 1])
+        firstname = whitespace_list(personal_name[bisect.bisect(personal_name, split_c):])
     else:
         firstname = whitespace_list(personal_name[:-1])
         lastname = whitespace_list([personal_name[-1]])
@@ -111,5 +113,15 @@ def normalise_whitespace(text):
     :param text: string
     :return: string with whitespace normalised to single space
     """
-    return " ".join(text.split())
+    return " ".join(text.strip().split())
+
+
+def removewhitespace(text):
+    """
+    Remove the whitespace in the string
+
+    :param text: string
+    :return: string with no whitespace
+    """
+    return "".join(text.strip().split())
 

@@ -21,3 +21,11 @@ def test_name_split_multiple_comma():
     assert names.name_split(name) == ['Rodríguez', 'Zapatero', ',', 'José', 'Luis']
 
 
+def test_remove_whitespace():
+    name = 'John  Smi t h'
+    assert names.removewhitespace(name) == 'JohnSmith'
+
+
+def test_normalise_whitespace():
+    name = ' John    Smith '
+    assert names.normalise_whitespace(name) == 'John Smith'
