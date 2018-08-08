@@ -56,13 +56,22 @@ def parse_titles(parts):
     return title_parts, nominal_parts, suffix_parts
 
 
-def name_split(name):
+def name_split(name, split_char=","):
+    """
+    Split a name into a list of name parts (not categorised, just an ordered list).
+
+    Retain commas for later use in splitting the list into surname and forename parts.
+
+    :param name: string for personal name
+    :param split_char: character to split on (default to comma)
+    :return: list of strings, including commas.
+    """
     name_list = []
-    comma_split = name.split(",")
-    for comma_item in comma_split[:-1]:
-        [name_list.append(normalise_whitespace(x)) for x in comma_item.split()]
-        name_list.append(",")
-    [name_list.append(normalise_whitespace(x)) for x in comma_split[-1].split()]
+    split_split = name.split(split_char)
+    for split_item in split_split[:-1]:
+        [name_list.append(normalise_whitespace(x)) for x in split_item.split()]
+        name_list.append(split_char)
+    [name_list.append(normalise_whitespace(x)) for x in split_split[-1].split()]
     return name_list
 
 
