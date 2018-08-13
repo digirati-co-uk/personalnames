@@ -21,9 +21,9 @@ formal_titles = [
     "rt hon",
 ]
 
-professional_titles = ["dr", "doctor", "professor", "chancellor", "vice-chancellor"]
+professional_titles = ["dr", "dr.", "doctor", "professor", "chancellor", "vice-chancellor"]
 
-post_nominals = ["esq", "qc", "kc", "r.a.", "a.r.a.", "junior", "jr", "senior"]
+post_nominals = ["esq", "esq.", "qc", "kc", "r.a.", "a.r.a.", "junior", "jr", "jr.", "senior", "sr", "sr."]
 
 religious_titles = [
     "his holiness",
