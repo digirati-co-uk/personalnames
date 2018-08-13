@@ -91,16 +91,20 @@ def name_parts(name, split_c=","):
 
     n_parts = name_split(name, split_char=split_c)
     title, personal_name, suffix = parse_titles(n_parts)
-    if split_c in personal_name:
+    if personal_name[-1] == split_c:  # case where multiple commas in name, or only comma is a post-nominal, e.g. Esq.
+        n = personal_name[:-1]
+    else:
+        n = personal_name
+    if split_c in n:
         lastname = whitespace_list(
-            personal_name[: bisect.bisect(personal_name, split_c) - 1]
+            n[: bisect.bisect(n, split_c) - 1]
         )
         firstname = whitespace_list(
-            personal_name[bisect.bisect(personal_name, split_c) :]
+            n[bisect.bisect(n, split_c) :]
         )
     else:
-        firstname = whitespace_list(personal_name[:-1])
-        lastname = whitespace_list([personal_name[-1]])
+        firstname = whitespace_list(n[:-1])
+        lastname = whitespace_list([n[-1]])
     title = whitespace_list(title)
     suffix = whitespace_list(suffix)
     return title, firstname, lastname, suffix

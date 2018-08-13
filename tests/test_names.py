@@ -224,3 +224,11 @@ def test_name_initials_defaults():
             "King, M. L.",
         ]
     )
+
+
+def test_pmc_example_parts():
+    assert names.name_parts(name='Walter Thomas Monnington, R.A.') == ('', 'Walter Thomas', 'Monnington', 'R.A.')
+
+
+def test_pmc_example_parts_commas():
+    assert names.name_parts(name='Monnington, Walter T., R.A.') == ('', 'Walter T.', 'Monnington', 'R.A.')
