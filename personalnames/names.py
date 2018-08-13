@@ -38,7 +38,9 @@ def gen_initials(lastname, firstname, title, formats):
         if "lastnamefirstname" in formats:
             forms.append(lastname + ", " + " ".join([parts[0], " ".join(initials)]))
             if title:
-                forms.append(lastname + ", " + " ".join([title, parts[0], " ".join(initials)]))
+                forms.append(
+                    lastname + ", " + " ".join([title, parts[0], " ".join(initials)])
+                )
     return list(set(forms))
 
 
@@ -87,19 +89,18 @@ def name_parts(name, split_c=","):
     n_parts = name_split(name, split_char=split_c)
     title, personal_name, suffix = parse_titles(n_parts)
     if split_c in personal_name:
-        lastname = whitespace_list(personal_name[: bisect.bisect(personal_name, split_c) - 1])
-        firstname = whitespace_list(personal_name[bisect.bisect(personal_name, split_c):])
+        lastname = whitespace_list(
+            personal_name[: bisect.bisect(personal_name, split_c) - 1]
+        )
+        firstname = whitespace_list(
+            personal_name[bisect.bisect(personal_name, split_c) :]
+        )
     else:
         firstname = whitespace_list(personal_name[:-1])
         lastname = whitespace_list([personal_name[-1]])
     title = whitespace_list(title)
     suffix = whitespace_list(suffix)
-    return (
-        title,
-        firstname,
-        lastname,
-        suffix
-    )
+    return (title, firstname, lastname, suffix)
 
 
 def name_initials(name, name_formats=None):
@@ -111,14 +112,16 @@ def name_initials(name, name_formats=None):
     :return: list of formats including initials
     """
     if name_formats is None:
-        name_formats = ['firstnamelastname', 'lastnamefirstname']
+        name_formats = ["firstnamelastname", "lastnamefirstname"]
     honorific, forename, surname, suffix = name_parts(name)
-    initials = gen_initials(lastname=surname, firstname=forename, title=honorific,formats=name_formats)
+    initials = gen_initials(
+        lastname=surname, firstname=forename, title=honorific, formats=name_formats
+    )
     return initials
 
 
 def whitespace_list(text_list):
-    return normalise_whitespace(' '.join(text_list))
+    return normalise_whitespace(" ".join(text_list))
 
 
 def normalise_whitespace(text):
@@ -139,4 +142,3 @@ def removewhitespace(text):
     :return: string with no whitespace
     """
     return "".join(text.strip().split())
-
