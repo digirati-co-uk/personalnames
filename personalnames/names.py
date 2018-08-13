@@ -100,7 +100,7 @@ def name_parts(name, split_c=","):
         lastname = whitespace_list([personal_name[-1]])
     title = whitespace_list(title)
     suffix = whitespace_list(suffix)
-    return (title, firstname, lastname, suffix)
+    return title, firstname, lastname, suffix
 
 
 def name_initials(name, name_formats=None):
