@@ -107,7 +107,7 @@ def test_gen_initials_no_ws():
             firstname="Martin Luther",
             title="Dr",
             formats=["firstnamelastname"],
-            no_ws=True
+            no_ws=True,
         )
     ) == sorted(
         [
@@ -258,8 +258,114 @@ def test_name_initials_defaults():
 
 
 def test_pmc_example_parts():
-    assert names.name_parts(name='Walter Thomas Monnington, R.A.') == ('', 'Walter Thomas', 'Monnington', 'R.A.')
+    assert names.name_parts(name="Walter Thomas Monnington, R.A.") == (
+        "",
+        "Walter Thomas",
+        "Monnington",
+        "R.A.",
+    )
 
 
 def test_pmc_example_parts_commas():
-    assert names.name_parts(name='Monnington, Walter T., R.A.') == ('', 'Walter T.', 'Monnington', 'R.A.')
+    assert names.name_parts(name="Monnington, Walter T., R.A.") == (
+        "",
+        "Walter T.",
+        "Monnington",
+        "R.A.",
+    )
+
+
+def test_pmc_example_parts_commas_labelled():
+    title, firstname, lastname, suffix = names.name_parts(
+        name="Monnington, Walter Thomas, R.A."
+    )
+    assert sorted(
+        names.gen_initials(
+            lastname=lastname,
+            firstname=firstname,
+            title=title,
+            post_nominal=suffix,
+            formats=["firstnamelastname", "lastnamefirstname"],
+            no_ws=True,
+        )
+    ) == sorted(
+        [
+            "Monnington, W. T.",
+            "Monnington, W. T., R.A.",
+            "Monnington, W. Thomas",
+            "Monnington, W. Thomas, R.A.",
+            "Monnington, Walter T.",
+            "Monnington, Walter T., R.A.",
+            "Monnington, Walter Thomas",
+            "Monnington, Walter Thomas, R.A.",
+            "Monnington,W.T.",
+            "Monnington,W.T.,R.A.",
+            "Monnington,W.Thomas",
+            "Monnington,W.Thomas,R.A.",
+            "Monnington,WalterT.",
+            "Monnington,WalterT.,R.A.",
+            "Monnington,WalterThomas",
+            "Monnington,WalterThomas,R.A.",
+            "W. T. Monnington",
+            "W. T. Monnington, R.A.",
+            "W. Thomas Monnington",
+            "W. Thomas Monnington, R.A.",
+            "W.T.Monnington",
+            "W.T.Monnington,R.A.",
+            "W.ThomasMonnington",
+            "W.ThomasMonnington,R.A.",
+            "Walter T. Monnington",
+            "Walter T. Monnington, R.A.",
+            "Walter Thomas Monnington",
+            "Walter Thomas Monnington, R.A.",
+            "WalterT.Monnington",
+            "WalterT.Monnington,R.A.",
+            "WalterThomasMonnington",
+            "WalterThomasMonnington,R.A.",
+        ]
+    )
+
+
+def test_name_initials_pmc():
+    assert sorted(
+        names.name_initials(
+            name="Monnington, Walter Thomas, R.A.",
+            name_formats=["firstnamelastname", "lastnamefirstname"],
+            non_ws=True,
+        )
+    ) == sorted(
+        [
+            "Monnington, W. T.",
+            "Monnington, W. T., R.A.",
+            "Monnington, W. Thomas",
+            "Monnington, W. Thomas, R.A.",
+            "Monnington, Walter T.",
+            "Monnington, Walter T., R.A.",
+            "Monnington, Walter Thomas",
+            "Monnington, Walter Thomas, R.A.",
+            "Monnington,W.T.",
+            "Monnington,W.T.,R.A.",
+            "Monnington,W.Thomas",
+            "Monnington,W.Thomas,R.A.",
+            "Monnington,WalterT.",
+            "Monnington,WalterT.,R.A.",
+            "Monnington,WalterThomas",
+            "Monnington,WalterThomas,R.A.",
+            "W. T. Monnington",
+            "W. T. Monnington, R.A.",
+            "W. Thomas Monnington",
+            "W. Thomas Monnington, R.A.",
+            "W.T.Monnington",
+            "W.T.Monnington,R.A.",
+            "W.ThomasMonnington",
+            "W.ThomasMonnington,R.A.",
+            "Walter T. Monnington",
+            "Walter T. Monnington, R.A.",
+            "Walter Thomas Monnington",
+            "Walter Thomas Monnington, R.A.",
+            "WalterT.Monnington",
+            "WalterT.Monnington,R.A.",
+            "WalterThomasMonnington",
+            "WalterThomasMonnington,R.A.",
+        ]
+    )

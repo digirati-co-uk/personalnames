@@ -113,19 +113,20 @@ def name_parts(name, split_c=","):
     return title, firstname, lastname, suffix
 
 
-def name_initials(name, name_formats=None):
+def name_initials(name, name_formats=None, non_ws=False):
     """
     Generate a set of initials from a name provided as a string.
 
     :param name: string, e.g. Dr. Martin Luther King
     :param name_formats: list of formats for the name.
+    :param non_ws: no whitespace form
     :return: list of formats including initials
     """
     if name_formats is None:
         name_formats = ["firstnamelastname", "lastnamefirstname"]
     honorific, forename, surname, suffix = name_parts(name)
     initials = gen_initials(
-        lastname=surname, firstname=forename, title=honorific, formats=name_formats
+        lastname=surname, firstname=forename, title=honorific, post_nominal=suffix, formats=name_formats, no_ws=non_ws
     )
     return initials
 
