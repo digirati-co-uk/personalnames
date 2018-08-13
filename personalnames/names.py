@@ -3,13 +3,14 @@ import bisect
 
 
 # noinspection PyTypeChecker
-def gen_initials(lastname, firstname, title, formats):
+def gen_initials(lastname, firstname, formats, title=None, post_nominal=None):
     """
     Generate the name formats with initials.
 
     :param lastname: person's lastname
     :param firstname: person's firstname
     :param title: person's title
+    :param post_nominal: suffix, e.g. 'junior', or 'esq.'
     :param formats: list of formats ['firstnamelastname', 'lastnamefirstname']
     :return: de-duplicated list of names with initials.
     """
@@ -41,6 +42,8 @@ def gen_initials(lastname, firstname, title, formats):
                 forms.append(
                     lastname + ", " + " ".join([title, parts[0], " ".join(initials)])
                 )
+    if post_nominal:
+        forms.extend([x + ", " + post_nominal for x in forms[:]])
     return list(set(forms))
 
 

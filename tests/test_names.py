@@ -122,6 +122,68 @@ def test_gen_initials_lastname():
     )
 
 
+def test_gen_initials_lastname_suffix():
+    assert sorted(
+        names.gen_initials(
+            lastname="King",
+            firstname="Martin Luther",
+            title="Dr",
+            post_nominal="Jr.",
+            formats=["lastnamefirstname"],
+        )
+    ) == sorted(
+        [
+            "King, Dr M. L.",
+            "King, Dr M. L., Jr.",
+            "King, Dr M. Luther",
+            "King, Dr M. Luther, Jr.",
+            "King, Dr Martin L.",
+            "King, Dr Martin L., Jr.",
+            "King, Dr Martin Luther",
+            "King, Dr Martin Luther, Jr.",
+            "King, M. L.",
+            "King, M. L., Jr.",
+            "King, M. Luther",
+            "King, M. Luther, Jr.",
+            "King, Martin L.",
+            "King, Martin L., Jr.",
+            "King, Martin Luther",
+            "King, Martin Luther, Jr.",
+        ]
+    )
+
+
+def test_gen_initials_firstname_suffix():
+    assert sorted(
+        names.gen_initials(
+            lastname="King",
+            firstname="Martin Luther",
+            title="Dr",
+            post_nominal="Jr.",
+            formats=["firstnamelastname"],
+        )
+    ) == sorted(
+        [
+            "Martin L. King",
+            "Dr M. Luther King",
+            "Dr Martin Luther King",
+            "M. Luther King",
+            "Dr M. L. King",
+            "Martin Luther King",
+            "Dr Martin L. King",
+            "M. L. King",
+            "Martin L. King, Jr.",
+            "Dr M. Luther King, Jr.",
+            "Dr Martin Luther King, Jr.",
+            "M. Luther King, Jr.",
+            "Dr M. L. King, Jr.",
+            "Martin Luther King, Jr.",
+            "Dr Martin L. King, Jr.",
+            "M. L. King, Jr.",
+        ]
+    )
+
+
 def test_name_initials():
     assert sorted(
         names.name_initials(
