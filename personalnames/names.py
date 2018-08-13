@@ -3,7 +3,7 @@ import bisect
 
 
 # noinspection PyTypeChecker
-def gen_initials(lastname, firstname, formats, title=None, post_nominal=None):
+def gen_initials(lastname, firstname, formats, title=None, post_nominal=None, no_ws=False):
     """
     Generate the name formats with initials.
 
@@ -12,6 +12,7 @@ def gen_initials(lastname, firstname, formats, title=None, post_nominal=None):
     :param title: person's title
     :param post_nominal: suffix, e.g. 'junior', or 'esq.'
     :param formats: list of formats ['firstnamelastname', 'lastnamefirstname']
+    :param no_ws: add a form with no whitespace.
     :return: de-duplicated list of names with initials.
     """
     # Normalise whitespace to single space
@@ -44,6 +45,8 @@ def gen_initials(lastname, firstname, formats, title=None, post_nominal=None):
                 )
     if post_nominal:
         forms.extend([x + ", " + post_nominal for x in forms[:]])
+    if no_ws:
+        forms.extend([removewhitespace(x) for x in forms[:]])
     return list(set(forms))
 
 
