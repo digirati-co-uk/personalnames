@@ -103,7 +103,7 @@ def name_parts(name, split_c=","):
             n[: bisect.bisect(n, split_c) - 1]
         )
         firstname = whitespace_list(
-            n[bisect.bisect(n, split_c) :]
+            n[bisect.bisect(n, split_c):]
         )
     else:
         firstname = whitespace_list(n[:-1])
