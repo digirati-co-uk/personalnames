@@ -1,6 +1,21 @@
 # personalnames
 Lightweight Python functions for generating different formats for personal names
 
+For example, when parsing text (from OCR or manual transcription) for named individuals, it can be useful to know all of the forms in which a name might appear.
+
+"Dr Martin Luther King, Jr."
+
+for example, might appear as "Dr. M. L. King, Jr." or as "King, Dr. Martin L., Jr.".
+
+This code will generate name variants by parsing a name (as a string), identifying prexifes and suffixes, and returning possible variants.
+
+## Requirements
+
+Python 3.x
+
+Required python packages are listed in `requirements.txt`.
+
+
 ## Usage
 
 ```python
@@ -105,3 +120,46 @@ assert sorted(formats) == sorted(
     ]
 )
 ```
+
+# License
+
+MIT License
+
+Copyright (c) 2018 
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+# Contribution Guidelines
+
+Personalnames uses Python 3.x. 
+
+Feel free to raise Github issues. 
+
+If you find an issue you are interested in fixing you can:
+
+
+* Fork the repository
+* Clone the repository to your local machine
+* Create a new branch for your fix using `git checkout -b branch-name-here`.
+* Fix the issue.
+* Commit and push the code to your remote repository.
+* Submit a pull request to the `personalnames` repository, with a description of your fix and the issue number.
+* The PR will be reviewed by the maintainer [https://github.com/mattmcgrattan](https://github.com/mattmcgrattan) and either merge the PR or response with comments.
+
+Thanks!
