@@ -1,4 +1,7 @@
 # personalnames
+
+[https://github.com/digirati-co-uk/personalnames](https://github.com/digirati-co-uk/personalnames)
+
 Lightweight Python functions for generating different formats for personal names
 
 For example, when parsing text (from OCR or manual transcription) for named individuals, it can be useful to know all of the forms in which a name might appear.
