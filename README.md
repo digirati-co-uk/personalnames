@@ -15,6 +15,9 @@ Python 3.x
 
 Required python packages are listed in `requirements.txt`.
 
+## Installation
+
+`pip install personalnames`
 
 ## Usage
 
