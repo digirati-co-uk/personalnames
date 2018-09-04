@@ -128,7 +128,7 @@ def name_initials(name, name_formats=None, non_ws=False):
     initials = gen_initials(
         lastname=surname, firstname=forename, title=honorific, post_nominal=suffix, formats=name_formats, no_ws=non_ws
     )
-    return initials
+    return [normalise_whitespace(x) for x in initials]
 
 
 def whitespace_list(text_list):
